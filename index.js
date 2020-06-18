@@ -53,21 +53,26 @@ try {
   );
 
   if (fs.existsSync("msbuild.rsp")) {
+      console.log('msbuild exists');
     if (fs.existsSync(coverageFile)) {
       console.log("[1] coverage file created at " + coverageFile);
     }
+    console.log('done OK ?');
     core.setOutput("coverageFile", coverageFile);
     fs.unlinkSync("msbuild.rsp");
   } else {
+    console.log('msbuild does not exists');
     if (fs.existsSync(coverageFile)) {
       console.log("[2] coverage file created at " + coverageFile);
     }
+    console.log("done KO ?");
     core.setFailed(`unable to find coverage file ${coverageFile}`);
   }
-
+  console.log("leaving");
   if (fs.existsSync(coverageFile)) {
     console.log("[3] coverage file created at " + coverageFile);
   }
+  console.log("left.");
 } catch (error) {
   if (fs.existsSync("msbuild.rsp")) {
     core.setFailed(`error occured : ${error}`);
