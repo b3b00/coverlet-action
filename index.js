@@ -7,14 +7,7 @@ var fs = require('fs');
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const output = core.getInput('output');
-  console.log(`output ${output}`);
-  const outputFormat = core.getInput('outputFormat');
-  console.log(`output ${outputFormat}`);
-  const testProject = core.getInput('testProject');
-  console.log(`output ${testProject}`);
-  const excludes = core.getInput('excludes');
-  console.log(`excludes ${excludes}`);
+
 
 /****************************************/
 /****                                ****/
@@ -26,11 +19,12 @@ console.log("create msbuild.rsp file");
 
 let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`
 if (excludes !== null && excludes !== undefined) {
-    msbuild += ` /:exclude="${excludes}"`;    
+    msbuild += ` /p:exclude="${excludes}"`;    
 }
 msbuild += ` ${testProject}`
 
 fs.writeFileSync('msbuild.rsp',msbuild);
+console.log(`msbuid.rsp conf :: ${msbuild}`);
 
 
 
@@ -58,15 +52,21 @@ console.log(dotnet.toString());
     console.log(`delete msbuild.rsp and set coverageFile output : ${coverageFile}`);
 
     if (fs.existsSync('msbuild.rsp')) {
+        if (fs.existsSync(coverageFile)) {
+            console.log("[1] coverage file created at "+coverageFile);
+        }
         core.setOutput("coverageFile", coverageFile );
         fs.unlinkSync('msbuild.rsp');        
     }
     else {
+        if (fs.existsSync(coverageFile)) {
+            console.log("[2] coverage file created at "+coverageFile);
+        }
         core.setFailed(`unable to find coverage file ${coverageFile}`);
     }
 
     if (fs.existsSync(coverageFile)) {
-        console.log("coverage file created at "+coverageFile);
+        console.log("[3] coverage file created at "+coverageFile);
     }
 
   
