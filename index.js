@@ -4,6 +4,7 @@ const { exec, execSync } = require("child_process");
 const path = require('path');
 var fs = require('fs');
 
+
 try {
   // `who-to-greet` input defined in action metadata file
   const output = core.getInput('output');
@@ -21,6 +22,8 @@ try {
 /****                                ****/
 /****************************************/
 
+console.log("create msbuild.rsp file");
+
 let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`
 if (excludes !== null && excludes !== undefined) {
     msbuild += ` /:exclude="${excludes}"`;    
@@ -37,8 +40,7 @@ fs.writeFileSync('msbuild.rsp',msbuild);
 /* ***                                ****/
 /* ***************************************/
 
-var ls = execSync('ls -la');
-console.log(ls.toString());
+console.log("run dotnet test");
 
 var dotnet = execSync('dotnet test -c Debug');
 console.log(dotnet.toString());
@@ -50,16 +52,22 @@ console.log(dotnet.toString());
 /****                                ****/
 /****************************************/
 
+    const coverageFile = `${path.dirName(testProject)}${path.delimiter}${testProject}\${output}`;
+
+    console.log(`delete msbuild.rsp and set coverageFile output : ${coverageFile}`);
+
     if (fs.existsSync('msbuild.rsp')) {
-        core.setOutput("coverageFile", `${path.dirName(testProject)}${path.delimiter}${testProject}\${output}` );
-        fs.unlinkSync('msbuild.rsp')
+        core.setOutput("coverageFile", coverageFile );
+        fs.unlinkSync('msbuild.rsp');        
     }
+    else {
+        core.setFailed(`unable to find coverage file ${coverageFile}`);
+    }
+
   
 } catch (error) {
     if (fs.existsSync('msbuild.rsp')) {
-        var msbuildContent = fs.readFileSync('msbuild.rsp');
-        console.log(msbuildContent);
-        console.log(msbuildContent.toString());
+        core.setFailed(`error occured : ${error}`);
         fs.unlinkSync('msbuild.rsp')
     }
   core.setFailed(error.message);
