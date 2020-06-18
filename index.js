@@ -57,6 +57,15 @@ try {
     if (fs.existsSync(coverageFile)) {
       console.log("[1] coverage file created at " + coverageFile);
     }
+    else {
+        console.log("[1]covergae file not found at "+coverageFile)
+    }
+    if (fs.existsSync(coverageFile+".info")) {
+        console.log("[1.1] coverage file created at " + coverageFile+".info");
+      }
+      else {
+          console.log("[1.1]covergae file not found at "+coverageFile+".info")
+      }
     console.log('done OK ?');
     core.setOutput("coverageFile", coverageFile);
     fs.unlinkSync("msbuild.rsp");
