@@ -17,6 +17,6 @@ inputs:
     required: true
 runs:
   using: 'node12'
-  pre: 'setup.js'
+  #pre: 'setup.js'
   main: 'index.js'
-  post: 'cleanup.js'
+  #post: 'cleanup.js'
