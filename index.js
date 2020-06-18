@@ -17,7 +17,7 @@ try {
 
 /****************************************/
 /****                                ****/
-/****  creer un fichier msbuild.rsp  ****/
+/****  create msbuild.rsp file       ****/
 /****                                ****/
 /****************************************/
 
@@ -33,7 +33,7 @@ fs.writeFileSync('msbuild.rsp',msbuild);
 
 /* ***************************************/
 /* ***                                ****/
-/* ***  lancer dotnet test            ****/
+/* ***  run dotnet test               ****/
 /* ***                                ****/
 /* ***************************************/
 
@@ -45,30 +45,15 @@ console.log(dotnet.toString());
 
 /****************************************/
 /****                                ****/
-/****  supprimer msbuild.rsp         ****/
+/****  delete msbuild.rsp            ****/
+/****  set coverageFile output       ****/
 /****                                ****/
 /****************************************/
 
-if (fs.existsSync('msbuild.rsp')) {
-    fs.unlink('msbuild.rsp')
-}
-
-    exec("dotnet --info", (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
-
     if (fs.existsSync('msbuild.rsp')) {
         core.setOutput("coverageFile", `${path.dirName(testProject)}${path.delimiter}${testProject}\${output}` );
+        fs.unlinkSync('msbuild.rsp')
     }
-  // Get the JSON webhook payload for the event that triggered the workflow
   
 } catch (error) {
     if (fs.existsSync('msbuild.rsp')) {
