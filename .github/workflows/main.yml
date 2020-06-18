@@ -14,27 +14,10 @@ jobs:
         with:
           dotnet-version: 3.1.101  
       - name: coverlet
-        uses: ./ # Uses an action in the root directory
-        id: coverlet
+        uses: ./ # Uses an action in the root directory        
         with:
           testProject: 'myTestProject/myTestProject.csproj'
           excludes: '[program]*'
           outpuFormat: 'whatever'
           output: './whatever.log'             
-      
-
-jobs:
-  coverlet_job:
-    runs-on: ubuntu-latest
-    name: A job to say hello
-    steps:
-      - name: Hello world action step
-    id: hello
-    uses: b3b00/coverlet-action
-    with:
-      testProject:'myTestProject/myTestProject.csproj'
-      excludes:'[program]*'
-      outpuFormat:'whatever'
-      output:'./whatever.log'        
-    # Use the output from the `hello` step
-  
+   
