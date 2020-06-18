@@ -23,3 +23,6 @@ runs:
   #pre: 'setup.js'
   main: 'index.js'
   #post: 'cleanup.js'
+branding:
+  icon: 'check-circle'  
+  color: 'green'
