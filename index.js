@@ -69,7 +69,10 @@ if (fs.existsSync('msbuild.rsp')) {
   console.log(`The event payload: ${payload}`);
 } catch (error) {
     if (fs.existsSync('msbuild.rsp')) {
-        fs.unlink('msbuild.rsp')
+        var msbuildContent = fs.readFileSync('msbuild.rsp');
+        console.log(msbuildContent);
+        console.log(msbuildContent.toString());
+        fs.unlinkSync('msbuild.rsp')
     }
   core.setFailed(error.message);
 }
