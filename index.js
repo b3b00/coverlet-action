@@ -52,7 +52,8 @@ console.log(dotnet.toString());
 /****                                ****/
 /****************************************/
 
-    const coverageFile = `${path.dirname(testProject)}${path.delimiter}${testProject}\${output}`;
+    const testPath = path.dirname(testProject);
+    const coverageFile = `${testProject}${path.delimiter}${path.delimiter}${output}`;
 
     console.log(`delete msbuild.rsp and set coverageFile output : ${coverageFile}`);
 
@@ -62,6 +63,10 @@ console.log(dotnet.toString());
     }
     else {
         core.setFailed(`unable to find coverage file ${coverageFile}`);
+    }
+
+    if (fs.existsSync(coverageFile)) {
+        console.log("coverage file created at "+coverageFile);
     }
 
   
