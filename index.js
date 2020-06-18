@@ -25,7 +25,7 @@ try {
   msbuild += ` ${testProject}`;
 
   fs.writeFileSync("msbuild.rsp", msbuild);
-  console.log(`msbuid.rsp conf :: ${msbuild}`);
+  //console.log(`msbuid.rsp conf :: ${msbuild}`);
 
   /* ***************************************/
   /* ***                                ****/
@@ -48,40 +48,27 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
 
-  console.log(
-    `delete msbuild.rsp and set coverageFile output : ${coverageFile}`
-  );
+  
 
-  if (fs.existsSync("msbuild.rsp")) {
-      console.log('msbuild exists');
+  if (fs.existsSync("msbuild.rsp")) {      
     if (fs.existsSync(coverageFile)) {
       console.log("[1] coverage file created at " + coverageFile);
     }
     else {
-        console.log("[1]covergae file not found at "+coverageFile)
+        core.setFailed(`error occured : coverage file not found at ${coverageFile}`);
+        console.log("[1]covergae file not found at "+coverageFile)        
     }
-    if (fs.existsSync(coverageFile+".info")) {
-        console.log("[1.1] coverage file created at " + coverageFile+".info");
-      }
-      else {
-          console.log("[1.1]covergae file not found at "+coverageFile+".info")
-      }
-    console.log('done OK ?');
+   
+    console.log(`setting output coverageFile : >>${coverageFile}<<`);
     core.setOutput("coverageFile", coverageFile);
+    console.log(`delete msbuild.rsp file`);
     fs.unlinkSync("msbuild.rsp");
   } else {
-    console.log('msbuild does not exists');
-    if (fs.existsSync(coverageFile)) {
-      console.log("[2] coverage file created at " + coverageFile);
-    }
-    console.log("done KO ?");
-    core.setFailed(`unable to find coverage file ${coverageFile}`);
+    core.setFailed(`msbuild.rsp not found`);
   }
-  console.log("leaving");
-  if (fs.existsSync(coverageFile)) {
-    console.log("[3] coverage file created at " + coverageFile);
-  }
-  console.log("left.");
+
+  console.log("coverlet test done.");
+  
 } catch (error) {
   if (fs.existsSync("msbuild.rsp")) {
     core.setFailed(`error occured : ${error}`);
