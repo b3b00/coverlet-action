@@ -18,6 +18,6 @@ jobs:
         with:
           testProject: 'myTestProject/myTestProject.csproj'
           excludes: '[program]*'
-          outpuFormat: 'whatever'
+          outputFormat: 'whatever'
           output: './whatever.log'             
    
