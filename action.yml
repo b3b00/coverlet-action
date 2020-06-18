@@ -15,6 +15,9 @@ inputs:
   testProject:
     description: 'path to unit test project from repository root'    
     required: true
+outputs:
+  coverageFile:
+    description: 'path to the generated coverage file'     
 runs:
   using: 'node12'
   #pre: 'setup.js'
