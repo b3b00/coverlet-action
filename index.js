@@ -53,7 +53,7 @@ console.log(dotnet.toString());
 /****************************************/
 
     const testPath = path.dirname(testProject);
-    const coverageFile = `${testProject}${path.delimiter}${path.delimiter}${output}`;
+    const coverageFile = `${testPath}/${output}`;
 
     console.log(`delete msbuild.rsp and set coverageFile output : ${coverageFile}`);
 
