@@ -26,9 +26,6 @@ try {
 
   console.log(`coverlet args ${msbuild}`);
 
-  //fs.writeFileSync("msbuild.rsp", msbuild);
-  //console.log(`msbuid.rsp conf :: ${msbuild}`);
-
   /* ***************************************/
   /* ***                                ****/
   /* ***  run dotnet test               ****/
@@ -50,31 +47,19 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
 
-  
-
-  if (fs.existsSync("msbuild.rsp")) {      
-    if (fs.existsSync(coverageFile)) {
-      console.log("[1] coverage file created at " + coverageFile);
-    }
-    else {
-        core.setFailed(`error occured : coverage file not found at ${coverageFile}`);
-        console.log("[1]covergae file not found at "+coverageFile)        
-    }
-   
-    console.log(`setting output coverageFile : >>${coverageFile}<<`);
-    core.setOutput("coverageFile", coverageFile);
-    console.log(`delete msbuild.rsp file`);
-    fs.unlinkSync("msbuild.rsp");
+  if (fs.existsSync(coverageFile)) {
+    console.log("[1] coverage file created at " + coverageFile);
   } else {
-    core.setFailed(`msbuild.rsp not found`);
+    core.setFailed(
+      `error occured : coverage file not found at ${coverageFile}`
+    );
+    console.log("[1]covergae file not found at " + coverageFile);
   }
+
+  console.log(`setting output coverageFile : >>${coverageFile}<<`);
+  core.setOutput("coverageFile", coverageFile);
 
   console.log("coverlet test done.");
-  
 } catch (error) {
-  if (fs.existsSync("msbuild.rsp")) {
-    core.setFailed(`error occured : ${error}`);
-    fs.unlinkSync("msbuild.rsp");
-  }
   core.setFailed(error.message);
 }
