@@ -50,7 +50,6 @@ with:
   excludes: '[program]*'
 - name: coveralls      
 uses: coverallsapp/github-action@v1.1.1
-if: matrix.os == 'windows-latest' && env.RUN_TESTS
 with:
   github-token: ${{secrets.GITHUB_TOKEN }} 
   path-to-lcov: ${{steps.coverlet.outputs.coverageFile}} 
