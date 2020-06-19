@@ -12,11 +12,11 @@ try {
 
   /****************************************/
   /****                                ****/
-  /****  create msbuild.rsp file       ****/
+  /****  create coverlet args          ****/
   /****                                ****/
   /****************************************/
 
-  console.log("create msbuild.rsp file");
+  console.log("create coverlet args");
 
   let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`;
   if (excludes !== null && excludes !== undefined) {
@@ -24,7 +24,9 @@ try {
   }
   msbuild += ` ${testProject}`;
 
-  fs.writeFileSync("msbuild.rsp", msbuild);
+  console.log(`coverlet args ${msbuild}`);
+
+  //fs.writeFileSync("msbuild.rsp", msbuild);
   //console.log(`msbuid.rsp conf :: ${msbuild}`);
 
   /* ***************************************/
@@ -35,7 +37,7 @@ try {
 
   console.log("run dotnet test");
 
-  var dotnet = execSync("dotnet test -c Debug");
+  var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
   console.log(dotnet.toString());
 
   /****************************************/
