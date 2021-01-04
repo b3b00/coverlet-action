@@ -22,7 +22,8 @@ try {
   if (excludestring !== null && excludestring !== undefined) {
     console.log(`found exclusions ${excludestring}`);
     excludestring = excludestring.replace(',','\',\'');
-    excludestring = `[${excludestring}]`;
+    excludestring = `['${excludestring}']`;
+    console.log("parse : "+excludestring);
     let excludes = null;
     try {
       excludes = JSON.parse(excludestring);
