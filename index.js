@@ -21,7 +21,7 @@ try {
 
   let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`;
   if (excludestring !== null && excludestring !== undefined) {
-    msbuild += `/p:Exclude=${excludestring}`;
+    msbuild += ` /p:Exclude=${excludestring}`;
     console.log(`found exclusions ${excludestring}`);
     // let excludes = excludestring.split(',');
     // if (excludes !== null && excludes !== undefined) {
