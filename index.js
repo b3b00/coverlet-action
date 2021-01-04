@@ -8,7 +8,7 @@ try {
   const output = core.getInput("output");
   const outputFormat = core.getInput("outputFormat");
   const testProject = core.getInput("testProject");
-  const excludestring = core.getInput("excludes");
+  let excludestring = core.getInput("excludes");
 
   /****************************************/
   /****                                ****/
