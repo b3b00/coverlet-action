@@ -21,16 +21,7 @@ try {
   let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`;
   if (excludestring !== null && excludestring !== undefined) {
     console.log(`found exclusions ${excludestring}`);
-    excludestring = excludestring.split(',').join('\',\'');
-    excludestring = `['${excludestring}']`;
-    console.log("parse : "+excludestring);
-    let excludes = null;
-    try {
-      excludes = JSON.parse(excludestring);
-    }
-    catch(e) {            
-      console.log("error parsing exclusions "+e);
-    }
+    let excludes = excludestring.split(',');
     if (excludes !== null && excludes !== undefined) {
       console.log(`found ${excludes.length} exclusions`);
       for (let i = 0; i < excludes.length; i++) {
@@ -78,5 +69,6 @@ try {
 
   console.log("coverlet test done.");
 } catch (error) {
+  console.log('global error '+error);
   core.setFailed(error.message);
 }
