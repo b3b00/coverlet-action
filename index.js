@@ -8,7 +8,7 @@ try {
   const output = core.getInput("output");
   const outputFormat = core.getInput("outputFormat");
   const testProject = core.getInput("testProject");
-  const excludes = core.getInput("excludes");
+  const excludestring = core.getInput("excludes");
 
   /****************************************/
   /****                                ****/
@@ -19,8 +19,18 @@ try {
   console.log("create coverlet args");
 
   let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`;
-  if (excludes !== null && excludes !== undefined) {
-    msbuild += ` /p:exclude="${excludes}"`;
+  if (excludestring !== null && excludestring !== undefined) {
+    excludestring = `[${excludestring}]`;
+    let excludes = null;
+    try {
+      excludes = JSON.parse(excludestring);
+    }
+    catch(e) {      
+    }
+    if (excludes !== null && excludes !== undefined)
+    for (let i = 0; i < excludes.length; i++) {
+      msbuild += ` /p:exclude="${excludes[i]}"`;
+    }
   }
   msbuild += ` ${testProject}`;
 

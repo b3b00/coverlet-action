@@ -19,6 +19,8 @@ This action runs coverlet coverage tool on a dotnet core solution
 ### `excludes`
 
 assemblies and namespaces exclusions for coverage : see coverlet documentation [Filters](https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/GlobalTool.md#filters)
+Filters must be separated with a ',' (comma).
+example : ```[filteredAssembly1]*,[filteredAssembl2]namespace2.*```
 
 
 ## Outputs
@@ -34,7 +36,7 @@ with:
   testProject: 'myProjectTests/myProjectTests.csproj'
   output: 'lcov.info'
   outputFormat: 'lcov'
-  excludes: '[program]*'
+  excludes: '[program]*,[test]test.*'
 ```
 
 ### chaining coverlet with coveralls 
@@ -47,7 +49,7 @@ with:
   testProject: 'myProjectTests/myProjectTests.csproj'
   output: 'lcov.info'
   outputFormat: 'lcov'
-  excludes: '[program]*'
+  excludes: '[program]*,[test]test.*'
 - name: coveralls      
 uses: coverallsapp/github-action@v1.1.1
 with:
