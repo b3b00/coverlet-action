@@ -26,7 +26,7 @@ try {
       console.log(`found ${excludes.length} exclusions`);
       for (let i = 0; i < excludes.length; i++) {
         console.log(`add exclusion ${excludes[i]}`);
-        msbuild += ` /p:Exclude="${excludes[i]}"`;
+        msbuild += ` /p:Exclude=${excludes[i]}`;
       }
     }
   }
