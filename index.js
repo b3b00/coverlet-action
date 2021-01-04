@@ -20,16 +20,22 @@ try {
 
   let msbuild = `/p:coverletOutput=${output} /p:CollectCoverage=true /p:CoverletOutputFormat=${outputFormat}`;
   if (excludestring !== null && excludestring !== undefined) {
+    console.log(`found exclusions ${excludestring}`);
+    excludestring = excludestring.replace(',','\',\'');
     excludestring = `[${excludestring}]`;
     let excludes = null;
     try {
       excludes = JSON.parse(excludestring);
     }
-    catch(e) {      
+    catch(e) {            
+      console.log("error parsing exclusions "+e);
     }
-    if (excludes !== null && excludes !== undefined)
-    for (let i = 0; i < excludes.length; i++) {
-      msbuild += ` /p:exclude="${excludes[i]}"`;
+    if (excludes !== null && excludes !== undefined) {
+      console.log(`found ${excludes.length} exclusions`);
+      for (let i = 0; i < excludes.length; i++) {
+        console.log(`add exclusion ${excludes[i]}`);
+        msbuild += ` /p:Exclude="${excludes[i]}"`;
+      }
     }
   }
   msbuild += ` ${testProject}`;
