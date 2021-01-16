@@ -44,7 +44,7 @@ with:
 
 ```yaml
 - name : coverlet
-uses: b3b00/coverlet-action@1.0.96
+uses: b3b00/coverlet-action@1.1.0
 with:
   testProject: 'myProjectTests/myProjectTests.csproj'
   output: 'lcov.info'
