@@ -56,7 +56,7 @@ try {
     core.setFailed(
       `error occured : coverage file not found at ${coverageFile}`
     );
-    console.log("[1]covergae file not found at " + coverageFile);
+    console.log("[1] coverage file not found at " + coverageFile);
   }
 
   console.log(`setting output coverageFile : >>${coverageFile}<<`);
