@@ -59,7 +59,7 @@ try {
     console.log("[1] coverage file not found at " + coverageFile);
   }
 
-  console.log(`setting output coverageFile : >>${coverageFile}<<`);
+  
   core.setOutput("coverageFile", coverageFile);
 
   console.log("coverlet test done.");
