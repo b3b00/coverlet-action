@@ -2,6 +2,8 @@
 
 This action runs coverlet coverage tool on a dotnet core solution
 
+>### ⚠️ This action assume that your unit tests project are corectly using coverlet packages.
+
 ## Inputs
 
 ### `testProject`
