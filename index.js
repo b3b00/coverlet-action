@@ -54,7 +54,7 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
 
-if (fs.existsSync($output)) {
+if (fs.existsSync(output)) {
   console.log('output file found at ./ ! ');
 }
 
