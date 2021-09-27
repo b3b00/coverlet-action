@@ -26,7 +26,7 @@ try {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
     console.log(`found exclusions ${excludestring}`);    
   }
-  if (thresholdstring !== null && thresholdstring !== undefined) {
+  if (thresholdstring !== null && thresholdstring !== undefined && thresholdstring !== '') {
     msbuild += ` -p:Threshold=${thresholdstring}`
   }
   msbuild += ` ${testProject}`;
@@ -53,6 +53,10 @@ try {
 
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
+
+if (fs.existsSync($output)) {
+  console.log('output file found at ./ ! ');
+}
 
   if (fs.existsSync(coverageFile)) {
     console.log("[1] coverage file created at " + coverageFile);
