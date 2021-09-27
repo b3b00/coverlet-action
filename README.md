@@ -24,6 +24,11 @@ assemblies and namespaces exclusions for coverage : see coverlet documentation [
 Filters must be separated with a ',' (comma).
 example : ```[filteredAssembly1]*,[filteredAssembl2]namespace2.*```
 
+### `threshold`
+
+Minimum coverage percent on all changes to your project below which build will fail.
+example : ```80```
+
 
 ## Outputs
 
@@ -39,6 +44,7 @@ with:
   output: 'lcov.info'
   outputFormat: 'lcov'
   excludes: '[program]*,[test]test.*'
+  threshold: 80
 ```
 
 ### chaining coverlet with coveralls 
