@@ -68,6 +68,7 @@ try {
 
   console.log("coverlet test done.");
 } catch (error) {
-  console.log('global error '+error);
+  console.log('global error '+error);    
+  console.log(error.stack);
   core.setFailed(error.message);
 }
