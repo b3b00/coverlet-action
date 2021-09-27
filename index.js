@@ -10,6 +10,7 @@ try {
   const testProject = core.getInput("testProject");
   let excludestring = core.getInput("excludes");
   let includestring = core.getInput("excludes");
+  let thresholdstring = core.getInput("threshold");
   
 
   /****************************************/
@@ -24,6 +25,9 @@ try {
   if (excludestring !== null && excludestring !== undefined) {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
     console.log(`found exclusions ${excludestring}`);    
+  }
+  if (thresholdstring !== null && thresholdstring !== undefined) {
+    msbuild += ` -p:Threshold=${thresholdstring}`
   }
   msbuild += ` ${testProject}`;
 
