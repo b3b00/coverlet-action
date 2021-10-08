@@ -83,7 +83,7 @@ try {
 try {
 
   var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
-  var dotnetOutput = ab2str(dotnet.output);
+  var dotnetOutput = ab2str(dotnet);
   var coverage = extractCoverage(dotnetOutput.split('\n'));
   if (coverage < parseFloat(thresholdstring)) {
     core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
