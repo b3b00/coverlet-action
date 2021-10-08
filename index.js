@@ -69,13 +69,13 @@ try {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
     console.log(`found exclusions ${excludestring}`);
   }
-  if (
-    thresholdstring !== null &&
-    thresholdstring !== undefined &&
-    thresholdstring !== ""
-  ) {
-    msbuild += ` -p:Threshold=${thresholdstring}`;
-  }
+  // if (
+  //   thresholdstring !== null &&
+  //   thresholdstring !== undefined &&
+  //   thresholdstring !== ""
+  // ) {
+  //   msbuild += ` -p:Threshold=${thresholdstring}`;
+  // }
   msbuild += ` ${testProject}`;
 
   console.log(`coverlet args ${msbuild}`);
