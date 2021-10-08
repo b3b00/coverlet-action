@@ -41,8 +41,28 @@ try {
 
   console.log("run dotnet test");
 
+try {
+
   var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
-  console.log(dotnet.toString());
+  var output = ab2str(dotnet.output);
+  var coverage = extractCoverage(output.split('\n'));
+  if (coverage < parseFloat(thresholdstring)) {
+    core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
+  }
+  else {
+    core.log(`excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`)
+  }
+}
+catch(error) {
+  var output = ab2str(error.stdout);
+  var coverage = extractCoverage(output.split('\n'));
+  if (coverage < parseFloat(thresholdstring)) {
+    core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
+  }
+  else {
+    core.log(`excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`)
+  }
+}
 
   /****************************************/
   /****                                ****/
