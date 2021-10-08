@@ -35,7 +35,7 @@ function assertCoverageThreshold(buffer, thresholdstring) {
   var dotnetOutput = ab2str(dotnet);
   console.log("coverlet output is \n" + dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split("\n"));
-  if (coverage !== null || coverage !== undefined) {
+  if (coverage !== null && coverage !== undefined) {
     if (coverage < parseFloat(thresholdstring)) {
       core.setFailed(
         `coverage level too low : ${coverage} % , expecting ${thresholdstring} %`
