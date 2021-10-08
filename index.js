@@ -4,33 +4,23 @@ const { exec, execSync } = require("child_process");
 const path = require("path");
 var fs = require("fs");
 
-let  ab2str = (buf) => {
+function ab2str(buf) {
   return String.fromCharCode.apply(null, buf);
 }
 
-let convertAndPrint = (label, buf) => {
-  if (buf) {
-    let s = ab2str(buf);
-    // let blob = new Blob([buf], { type: "text/plain; charset=utf-8" });
-    // blob.text().then((text) => console.log(label + ":\n" + text));
-    console.log(label+" : \n"+s);
-    return s;
-  }
-};
 
-
-let extractCoverageFromLine= (line) => {  
-  var columns = line.split('|').filter(e => e);
-  console.log("looking for coverage on line "+line);
-  let linecol = columns[1].trim().replace('%','').replace(',','.');
-  console.log("column 1 : "+columns[1]);
+function extractCoverageFromLine(line) {
+  var columns = line.split("|").filter((e) => e);
+  console.log("looking for coverage on line " + line);
+  let linecol = columns[1].trim().replace("%", "").replace(",", ".");
+  console.log("column 1 : " + columns[1]);
   var cd = parseFloat(linecol);
   return cd;
 }
 
-let extractCoverage = (lines) => {  
+function extractCoverage(lines) {
   const header = "| Total   |";
-  let i = 0;  
+  let i = 0;
   while (i < lines.length) {
     let line = lines[i];
     if (line.startsWith(header)) {
@@ -41,9 +31,22 @@ let extractCoverage = (lines) => {
   return null;
 }
 
-
-
-
+function assertCoverageThreshold(buffer, thresholdstring) {
+  var dotnetOutput = ab2str(dotnet);
+  console.log("coverlet output is \n" + dotnetOutput);
+  var coverage = extractCoverage(dotnetOutput.split("\n"));
+  if (coverage !== null || coverage !== undefined) {
+    if (coverage < parseFloat(thresholdstring)) {
+      core.setFailed(
+        `coverage level too low : ${coverage} % , expecting ${thresholdstring} %`
+      );
+    } else {
+      console.log(
+        `excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`
+      );
+    }
+  }
+}
 
 try {
   const output = core.getInput("output");
@@ -52,7 +55,6 @@ try {
   let excludestring = core.getInput("excludes");
   let includestring = core.getInput("excludes");
   let thresholdstring = core.getInput("threshold");
-  
 
   /****************************************/
   /****                                ****/
@@ -65,10 +67,14 @@ try {
   let msbuild = `-p:coverletOutput=${output} -p:CollectCoverage=true -p:CoverletOutputFormat=${outputFormat}`;
   if (excludestring !== null && excludestring !== undefined) {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
-    console.log(`found exclusions ${excludestring}`);    
+    console.log(`found exclusions ${excludestring}`);
   }
-  if (thresholdstring !== null && thresholdstring !== undefined && thresholdstring !== '') {
-    msbuild += ` -p:Threshold=${thresholdstring}`
+  if (
+    thresholdstring !== null &&
+    thresholdstring !== undefined &&
+    thresholdstring !== ""
+  ) {
+    msbuild += ` -p:Threshold=${thresholdstring}`;
   }
   msbuild += ` ${testProject}`;
 
@@ -82,30 +88,13 @@ try {
 
   console.log("run dotnet test");
 
-try {
-
-  var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
-  var dotnetOutput = ab2str(dotnet);
-  console.log("coverlet output is \n"+dotnetOutput);
-  var coverage = extractCoverage(dotnetOutput.split('\n'));
-  if (coverage < parseFloat(thresholdstring)) {
-    core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
+  try {
+    var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
+    assertCoverageThreshold(dotnet, thresholdstring);
+  } catch (error) {
+    assertCoverageThreshold(error.stdout, thresholdstring);
+    core.setFailed('dotnet test failure '+error.message)
   }
-  else {
-    console.log(`excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`)
-  }
-}
-catch(error) {
-  var dotnetOutput = ab2str(error.stdout);
-  console.log("coverlet output is \n"+dotnetOutput);
-  var coverage = extractCoverage(dotnetOutput.split('\n'));
-  if (coverage < parseFloat(thresholdstring)) {
-    core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
-  }
-  else {
-    console.log(`excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`)
-  }
-}
 
   /****************************************/
   /****                                ****/
@@ -117,9 +106,9 @@ catch(error) {
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
 
-if (fs.existsSync(output)) {
-  console.log('output file found at ./ ! ');
-}
+  if (fs.existsSync(output)) {
+    console.log("output file found at ./ ! ");
+  }
 
   if (fs.existsSync(coverageFile)) {
     console.log("[1] coverage file created at " + coverageFile);
@@ -130,12 +119,11 @@ if (fs.existsSync(output)) {
     console.log("[1] coverage file not found at " + coverageFile);
   }
 
-  
   core.setOutput("coverageFile", coverageFile);
 
   console.log("coverlet test done.");
 } catch (error) {
-  console.log('global error '+error);    
+  console.log("global error " + error);
   console.log(error.stack);
   core.setFailed(error.message);
 }
