@@ -4,6 +4,45 @@ const { exec, execSync } = require("child_process");
 const path = require("path");
 var fs = require("fs");
 
+let  ab2str = (buf) => {
+  return String.fromCharCode.apply(null, buf);
+}
+
+let convertAndPrint = (label, buf) => {
+  if (buf) {
+    let s = ab2str(buf);
+    // let blob = new Blob([buf], { type: "text/plain; charset=utf-8" });
+    // blob.text().then((text) => console.log(label + ":\n" + text));
+    console.log(label+" : \n"+s);
+    return s;
+  }
+};
+
+
+let extractCoverageFromLine= (line) => {  
+  var columns = line.split('|').filter(e => e);
+  let linecol = columns[1].trim().replace('%','').replace(',','.');
+  var cd = parseFloat(linecol);
+  return cd;
+}
+
+let extractCoverage = (lines) => {
+  const header = "| Total   |";
+  let i = 0;  
+  while (i < lines.length) {
+    let line = lines[i];
+    if (line.startsWith(header)) {
+      return extractCoverageFromLine(line);
+    }
+    i++;
+  }
+  return null;
+}
+
+
+
+
+
 try {
   const output = core.getInput("output");
   const outputFormat = core.getInput("outputFormat");
@@ -44,8 +83,8 @@ try {
 try {
 
   var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
-  var output = ab2str(dotnet.output);
-  var coverage = extractCoverage(output.split('\n'));
+  var dotnetOutput = ab2str(dotnet.output);
+  var coverage = extractCoverage(dotnetOutput.split('\n'));
   if (coverage < parseFloat(thresholdstring)) {
     core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
   }
@@ -54,8 +93,8 @@ try {
   }
 }
 catch(error) {
-  var output = ab2str(error.stdout);
-  var coverage = extractCoverage(output.split('\n'));
+  var dotnetOutput = ab2str(error.stdout);
+  var coverage = extractCoverage(dotnetOutput.split('\n'));
   if (coverage < parseFloat(thresholdstring)) {
     core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
   }
