@@ -21,12 +21,14 @@ let convertAndPrint = (label, buf) => {
 
 let extractCoverageFromLine= (line) => {  
   var columns = line.split('|').filter(e => e);
+  core.log("looking for coverage on line "+line);
   let linecol = columns[1].trim().replace('%','').replace(',','.');
+  core.log("column 1 : "+columns[1]);
   var cd = parseFloat(linecol);
   return cd;
 }
 
-let extractCoverage = (lines) => {
+let extractCoverage = (lines) => {  
   const header = "| Total   |";
   let i = 0;  
   while (i < lines.length) {
@@ -84,6 +86,7 @@ try {
 
   var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
   var dotnetOutput = ab2str(dotnet);
+  core.log("coverlet output is \n"+dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split('\n'));
   if (coverage < parseFloat(thresholdstring)) {
     core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
@@ -94,6 +97,7 @@ try {
 }
 catch(error) {
   var dotnetOutput = ab2str(error.stdout);
+  core.log("coverlet output is \n"+dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split('\n'));
   if (coverage < parseFloat(thresholdstring)) {
     core.setFailed(`coverage level too low : ${coverage} % , expecting ${thresholdstring} %`);
