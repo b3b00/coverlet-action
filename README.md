@@ -1,6 +1,6 @@
 # Coverlet action
 
-This action runs coverlet coverage tool on a dotnet core solution
+This action runs [coverlet coverage](https://github.com/coverlet-coverage/coverlet) tool on a dotnet core solution
 
 >### ⚠️ This action assumes that your unit tests project are corectly using coverlet packages.
 
