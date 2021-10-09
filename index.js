@@ -31,6 +31,7 @@ function extractCoverage(lines) {
 
 function assertCoverageThreshold(buffer, thresholdstring) {
   var dotnetOutput = ab2str(dotnet);
+  console.log(dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split("\n"));
   if (coverage !== null && coverage !== undefined) {
     if (coverage < parseFloat(thresholdstring)) {
@@ -62,8 +63,6 @@ try {
   }
   
   msbuild += ` ${testProject}`;
-
-  console.log(`coverlet args ${msbuild}`);
 
   /* ***************************************/
   /* ***                                ****/
