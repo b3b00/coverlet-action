@@ -11,9 +11,7 @@ function ab2str(buf) {
 
 function extractCoverageFromLine(line) {
   var columns = line.split("|").filter((e) => e);
-  console.log("looking for coverage on line " + line);
   let linecol = columns[1].trim().replace("%", "").replace(",", ".");
-  console.log("column 1 : " + columns[1]);
   var cd = parseFloat(linecol);
   return cd;
 }
@@ -33,16 +31,11 @@ function extractCoverage(lines) {
 
 function assertCoverageThreshold(buffer, thresholdstring) {
   var dotnetOutput = ab2str(dotnet);
-  console.log("coverlet output is \n" + dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split("\n"));
   if (coverage !== null && coverage !== undefined) {
     if (coverage < parseFloat(thresholdstring)) {
       core.setFailed(
         `coverage level too low : ${coverage} % , expecting ${thresholdstring} %`
-      );
-    } else {
-      console.log(
-        `excellent ! coverage is sill > ${thresholdstring} %  ! ${coverage} %`
       );
     }
   }
@@ -62,12 +55,10 @@ try {
   /****                                ****/
   /****************************************/
 
-  console.log("create coverlet args");
 
   let msbuild = `-p:coverletOutput=${output} -p:CollectCoverage=true -p:CoverletOutputFormat=${outputFormat}`;
   if (excludestring !== null && excludestring !== undefined) {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
-    console.log(`found exclusions ${excludestring}`);
   }
   
   msbuild += ` ${testProject}`;
@@ -80,7 +71,7 @@ try {
   /* ***                                ****/
   /* ***************************************/
 
-  console.log("run dotnet test");
+  console.log(`run dotnet test -c Debug ${msbuild}`);
 
   try {
     var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
@@ -100,17 +91,11 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = `${testPath}/${output}`;
 
-  if (fs.existsSync(output)) {
-    console.log("output file found at ./ ! ");
-  }
 
-  if (fs.existsSync(coverageFile)) {
-    console.log("[1] coverage file created at " + coverageFile);
-  } else {
+  if (!fs.existsSync(coverageFile)) {
     core.setFailed(
       `error occured : coverage file not found at ${coverageFile}`
-    );
-    console.log("[1] coverage file not found at " + coverageFile);
+    );    
   }
 
   core.setOutput("coverageFile", coverageFile);
