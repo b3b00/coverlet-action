@@ -30,7 +30,8 @@ function extractCoverage(lines) {
 }
 
 function assertCoverageThreshold(buffer, thresholdstring) {
-  var dotnetOutput = ab2str(dotnet);
+  var dotnetOutput = ab2str(buffer);
+  console.log(`checking thresolhd ${thresholdstring}`,buffer)
   console.log(dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split("\n"));
   if (coverage !== null && coverage !== undefined) {
@@ -75,11 +76,12 @@ try {
   try {
     var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
     console.log(`dotnet succeeded`);
+    console.log(dotnet);
     assertCoverageThreshold(dotnet.stdout, thresholdstring);
   } catch (error) {
-    assertCoverageThreshold(error.stdout, thresholdstring);
     console.log(`dotnet failed`);
     console.log(error);
+    assertCoverageThreshold(error.stdout, thresholdstring);    
     core.setFailed('dotnet test failure '+error.message)
   }
 
