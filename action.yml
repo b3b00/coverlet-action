@@ -1,16 +1,16 @@
 name: 'Coverlet coverage test'
-description: 'Run coverlet coverage using a msbuild.rsp generated configuation'
+description: 'Run coverlet coverage using a msbuild.rsp generated configuration'
 inputs:
   output:  # id of input
     description: 'output filename'
     required: true
     default: './lcov.info'
   outputFormat:
-    description: 'output format : lcov, json, opencover, corbertura, temacity (see coverlet documentation)' 
+    description: 'output format : lcov, json, opencover, cobertura, teamcity (see coverlet documentation)' 
     required: true
     default : 'lcov'
   excludes:
-    description: 'assemblies, namespances exclusions (see coverlet documentation)'
+    description: 'assemblies, namespaces, exclusions (see coverlet documentation)'
     required: false
   testProject:
     description: 'path to unit test project from repository root'    
