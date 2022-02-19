@@ -31,7 +31,7 @@ function extractCoverage(lines) {
 
 function assertCoverageThreshold(buffer, thresholdstring) {
   var dotnetOutput = ab2str(buffer);
-  console.log(`checking thresolhd ${thresholdstring}`,buffer)
+  console.log(`Checking threshold ${thresholdstring}`, buffer)
   console.log(dotnetOutput);
   var coverage = extractCoverage(dotnetOutput.split("\n"));
   if (coverage !== null && coverage !== undefined) {
