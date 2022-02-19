@@ -76,8 +76,8 @@ try {
   try {
     var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
     console.log(`dotnet succeeded`);
-    console.log(dotnet);
-    assertCoverageThreshold(dotnet.stdout, thresholdstring);
+    console.log(ab2str(dotnet));
+    assertCoverageThreshold(dotnet, thresholdstring);
   } catch (error) {
     console.log(`dotnet failed`);
     console.log(error);
