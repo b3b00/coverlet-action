@@ -2,13 +2,13 @@
 
 This action runs [coverlet coverage](https://github.com/coverlet-coverage/coverlet) tool on a dotnet core solution
 
->### ⚠️ This action assumes that your unit tests project are corectly using coverlet packages.
+>### ⚠️ This action assumes that your unit test projects are correctly using coverlet packages.
 
 ## Inputs
 
 ### `testProject`
 
-**Required** the path to the unit test csproj (relative to the repository root) ex :  `testProject/testProject.csproj
+**Required** the path to the unit test csproj (relative to the repository root) e.g. `testProject/testProject.csproj
 
 ### `output` 
 
