@@ -1,0 +1,14 @@
+inputs:
+  testProject:
+    type: string
+  outputs:
+    type: string
+  outputFormat:
+    type: string
+  excludes:
+    type: string
+  threshold:
+    type: integer
+outputs:
+  outputFile
+     type: string
