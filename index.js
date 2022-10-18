@@ -100,7 +100,9 @@ try {
     );    
   }
 
-  echo `coverageFile=${coverageFile}` >> $GITHUB_OUTPUT
+  fs.appendFileSync(process.env.$GITHUB_OUTPUT,`coverageFile=${coverageFile}`, {
+    encoding: 'utf8'
+  });  
   //core.setOutput("coverageFile", coverageFile);
 
   console.log("coverlet test done.");
