@@ -100,7 +100,8 @@ try {
     );    
   }
 
-  core.setOutput("coverageFile", coverageFile);
+  echo `coverageFile=${coverageFile}` >> $GITHUB_OUTPUT
+  //core.setOutput("coverageFile", coverageFile);
 
   console.log("coverlet test done.");
 } catch (error) {
