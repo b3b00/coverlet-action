@@ -43,7 +43,7 @@ path to the generated coverage file. can be used to send data to coveralls for e
 
 ## Example usage
 ```yaml
-uses: b3b00/coverlet-action@1.1.9
+uses: b3b00/coverlet-action@1.2.5
 with:
   testProject: 'myProjectTests/myProjectTests.csproj'
   output: 'lcov.info'
@@ -57,7 +57,7 @@ with:
 
 ```yaml
 - name : coverlet
-uses: b3b00/coverlet-action@1.1.9
+uses: b3b00/coverlet-action@1.2.5
 with:
   testProject: 'myProjectTests/myProjectTests.csproj'
   output: 'lcov.info'
