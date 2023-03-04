@@ -9,6 +9,8 @@ inputs:
     type: string
   threshold:
     type: integer
+  debug
+    type: boolean
 outputs:
   outputFile
      type: string

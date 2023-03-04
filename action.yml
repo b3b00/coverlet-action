@@ -18,6 +18,9 @@ inputs:
   threshold:
     description: 'threshold below which tests fail.'
     required: false
+  debug:
+    description: 'if true, produces extra debugging output. Default is false.'
+    required: false
 outputs:
   coverageFile:
     description: 'path to the generated coverage file'     

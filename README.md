@@ -29,6 +29,11 @@ example : ```[filteredAssembly1]*,[filteredAssembl2]namespace2.*```
 Minimum coverage percent on all changes to your project below which build will fail.
 example : ```80```
 
+### `debug`
+
+if true , produces extra debug output. Optional, false is default
+
+
 
 ## Outputs
 
