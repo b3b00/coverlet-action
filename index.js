@@ -139,7 +139,7 @@ try {
 
 
   if (!fs.existsSync(coverageFile)) {
-	  fs.readdirSync(testFolder).forEach(file => {
+	  fs.readdirSync(testPath).forEach(file => {
   console.log(file);
 });
     core.setFailed(
