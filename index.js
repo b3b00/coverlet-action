@@ -139,6 +139,9 @@ try {
 
 
   if (!fs.existsSync(coverageFile)) {
+	  fs.readdirSync(testFolder).forEach(file => {
+  console.log(file);
+});
     core.setFailed(
       `error occured : coverage file not found at ${coverageFile}`
     );    
