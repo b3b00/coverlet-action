@@ -25,7 +25,7 @@ outputs:
   coverageFile:
     description: 'path to the generated coverage file'     
 runs:
-  using: 'node16'
+  using: 'node20'
   #pre: 'setup.js'
   main: 'index.js'
   #post: 'cleanup.js'
