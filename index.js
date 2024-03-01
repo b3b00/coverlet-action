@@ -135,7 +135,7 @@ try {
   /****************************************/
 
   const testPath = path.dirname(testProject);
-  const coverageFile = `${testPath}/${output}`;
+  const coverageFile = path.join(testPath, output);
 
 
   if (!fs.existsSync(coverageFile)) {
