@@ -116,7 +116,7 @@ try {
     
       console.log('pwd :');
       console.log(cout);
-      var pwdOutput = ab2str(cout.stdout,false);
+      var pwdOutput = ab2str(cout,false);
       console.log(`pwd output stdout:>${pwdOutput}<`);
   } catch (error) {
     console.log(`pwd failed`);
