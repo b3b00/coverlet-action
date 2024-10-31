@@ -104,6 +104,25 @@ try {
   msbuild += ` ${testProject}`;
 
   
+  /* ***************************************/
+  /* ***                                ****/
+  /* ***  get working directory         ****/
+  /* ***                                ****/
+  /* ***************************************/
+  console.log(`run pwd to get current directory`);
+  try {
+    var cout = execSync(`pwd`);
+    console.log(`pwd succeeded`);
+    
+      console.log('pwd :');
+      console.log(cout);
+      var pwdOutput = ab2str(cout.stdout,false);
+      console.log(`pwd output stdout:>${pwdOutput}<`);
+  } catch (error) {
+    console.log(`pwd failed`);
+    var pwdOutput = ab2str(error.stdout,false);    
+    core.setFailed(`pwd failure message:>${error.message}< - stdout:>${pwdOutput}<`);
+  }
 
   /* ***************************************/
   /* ***                                ****/
