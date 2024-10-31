@@ -107,20 +107,16 @@ try {
 
   let currentDirectory = '';
 
-  console.log(`run pwd to get current directory`);
   try {
     var cout = execSync(`pwd`);
-    console.log(`pwd succeeded`);
     
-      console.log('pwd :');
-      console.log(cout);
       var pwdOutput = ab2str(cout,false);
       pwdOutput = pwdOutput.replace('\n','').replace('\r','');
-      console.log(`pwd output stdout:>${pwdOutput}<`);
+      console.log(`current working directory is :>${pwdOutput}<`);
       currentDirectory = pwdOutput;
   } catch (error) {
     console.log(`pwd failed`);
-    var pwdOutput = ab2str(error.stdout,false);    
+    var pwdOutput = ab2str(error.stdout,false);
     core.setFailed(`pwd failure message:>${error.message}< - stdout:>${pwdOutput}<`);
   }
 
@@ -175,14 +171,11 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = path.join(currentDirectory,'TestResults', output);
 
-console.log(`looking for coverage file at ${coverageFile}`)
+
   if (!fs.existsSync(coverageFile)) {
-    console.log(`listing files under ${resultDir}`);
-    console.log('---------');
-	  fs.readdirSync(resultDir).forEach(file => {
-  console.log(file);      
-});
-    console.log('---------');
+    fs.readdirSync(resultDir).forEach(file => {
+      console.log(file);
+    });
     core.setFailed(
       `error occured : coverage file not found at ${coverageFile}`
     );    
