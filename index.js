@@ -89,26 +89,14 @@ try {
   console.log(`debug ${debugstring}`);
   let debug = debugstring == 'true';
 
-  /****************************************/
-  /****                                ****/
-  /****  create coverlet args          ****/
-  /****                                ****/
-  /****************************************/
-
-
-  let msbuild = `-p:coverletOutput= ${github.workspace}/TestResults/${output} -p:CollectCoverage=true  -p:MergeWith=${github.workspace}/TestResults/coverlet.json -p:CoverletOutputFormat=\\"json%2c${outputFormat}\\"`;
-  if (excludestring !== null && excludestring !== undefined) {
-    msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
-  }
-  
-  msbuild += ` ${testProject}`;
-
-  
-  /* ***************************************/
+/* ***************************************/
   /* ***                                ****/
   /* ***  get working directory         ****/
   /* ***                                ****/
   /* ***************************************/
+
+  let currentDirectory = '';
+
   console.log(`run pwd to get current directory`);
   try {
     var cout = execSync(`pwd`);
@@ -117,12 +105,32 @@ try {
       console.log('pwd :');
       console.log(cout);
       var pwdOutput = ab2str(cout,false);
+      pwdOutput = pwdOutput.replace('`n','').replace('\r','');
       console.log(`pwd output stdout:>${pwdOutput}<`);
+      currentDirectory = pwdOutput;
   } catch (error) {
     console.log(`pwd failed`);
     var pwdOutput = ab2str(error.stdout,false);    
     core.setFailed(`pwd failure message:>${error.message}< - stdout:>${pwdOutput}<`);
   }
+
+
+  /****************************************/
+  /****                                ****/
+  /****  create coverlet args          ****/
+  /****                                ****/
+  /****************************************/
+
+
+  let msbuild = `-p:coverletOutput= ${currentDirectory}/TestResults/${output} -p:CollectCoverage=true  -p:MergeWith=${currentDirectory}/TestResults/coverlet.json -p:CoverletOutputFormat=\\"json%2c${outputFormat}\\"`;
+  if (excludestring !== null && excludestring !== undefined) {
+    msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
+  }
+  
+  msbuild += ` ${testProject}`;
+
+  
+  
 
   /* ***************************************/
   /* ***                                ****/
