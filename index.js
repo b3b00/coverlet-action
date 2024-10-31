@@ -37,6 +37,7 @@ function extractCoverageFromLine(line, debug=false) {
 function extractCoverage(lines, debug=false) {
   const header = "| Total   |";
   let i = 0;
+  let coverageLines = []
   while (i < lines.length) {
     let line = lines[i];
     if (debug) {
@@ -46,10 +47,19 @@ function extractCoverage(lines, debug=false) {
     if (line.startsWith(header)) {
       console.log(`total coverage found in line >>>${line}<<<`);
       console.log();
-      return extractCoverageFromLine(line,debug);
+      coverageLines.push(line);
+      
     }
     i++;
   }
+  if (coverageLines.length == 1) {
+    return extractCoverageFromLine(coverageLines[0],debug);
+  }
+  else if (coverageLines.length > 1) {
+    console.log(`many total coverage line found : `,coverageLines)
+    return null;
+  }
+
   if (debug) {
     console.log(`total coverage line not found `);
     console.log();
@@ -162,11 +172,11 @@ try {
   /****************************************/
 
   const testPath = path.dirname(testProject);
-  const coverageFile = path.join(testPath, output);
+  const coverageFile = path.join(currentDirectory,'TestResults', output);
 
 
   if (!fs.existsSync(coverageFile)) {
-	  fs.readdirSync(testPath).forEach(file => {
+	  fs.readdirSync(path.join(currentDirectory,'TestResults')).forEach(file => {
   console.log(file);
 });
     core.setFailed(
