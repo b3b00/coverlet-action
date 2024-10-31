@@ -171,14 +171,18 @@ try {
   /****                                ****/
   /****************************************/
 
+  const resultDir = path.join(currentDirectory,'TestResults');
   const testPath = path.dirname(testProject);
   const coverageFile = path.join(currentDirectory,'TestResults', output);
 
-
+console.log(`looking for coverage file at ${coverageFile}`)
   if (!fs.existsSync(coverageFile)) {
-	  fs.readdirSync(path.join(currentDirectory,'TestResults')).forEach(file => {
-  console.log(file);
+    console.log(`listing files under ${resultDir}`);
+    console.log('---------');
+	  fs.readdirSync(resultDir).forEach(file => {
+  console.log(file);      
 });
+    console.log('---------');
     core.setFailed(
       `error occured : coverage file not found at ${coverageFile}`
     );    
