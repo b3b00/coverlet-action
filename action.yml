@@ -13,7 +13,7 @@ inputs:
     description: 'assemblies, namespaces, exclusions (see coverlet documentation)'
     required: false
   testProject:
-    description: 'path to unit test project from repository root'    
+    description: 'path to unit test project file or solution file from repository root'    
     required: true
   threshold:
     description: 'threshold below which tests fail.'

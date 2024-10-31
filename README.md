@@ -8,7 +8,9 @@ This action runs [coverlet coverage](https://github.com/coverlet-coverage/coverl
 
 ### `testProject`
 
-**Required** the path to the unit test csproj (relative to the repository root) e.g. `testProject/testProject.csproj
+**Required** Path to the tests :
+  - the path to the unit test project (relative to the repository root) e.g. `testProject/testProject.csproj`. 
+  - A solution file in which case all test projects included in the solution will be run. ⚠️ When using a solution coverage threshold will not be checked.
 
 ### `output` 
 
