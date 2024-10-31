@@ -96,7 +96,7 @@ try {
   /****************************************/
 
 
-  let msbuild = `-p:coverletOutput= ${{github.workspace}}/TestResults/${output} -p:CollectCoverage=true  -p:MergeWith=${{github.workspace}}/TestResults/coverlet.json -p:CoverletOutputFormat=\\"json%2c${outputFormat}\\"`;
+  let msbuild = `-p:coverletOutput= ${github.workspace}/TestResults/${output} -p:CollectCoverage=true  -p:MergeWith=${github.workspace}/TestResults/coverlet.json -p:CoverletOutputFormat=\\"json%2c${outputFormat}\\"`;
   if (excludestring !== null && excludestring !== undefined) {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
   }
