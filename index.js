@@ -105,7 +105,7 @@ try {
       console.log('pwd :');
       console.log(cout);
       var pwdOutput = ab2str(cout,false);
-      pwdOutput = pwdOutput.replace('`n','').replace('\r','');
+      pwdOutput = pwdOutput.replace('\n','').replace('\r','');
       console.log(`pwd output stdout:>${pwdOutput}<`);
       currentDirectory = pwdOutput;
   } catch (error) {
