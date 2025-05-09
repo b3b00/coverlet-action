@@ -144,10 +144,10 @@ try {
   /* ***                                ****/
   /* ***************************************/
 
-  console.log(`run dotnet test -c Debug ${msbuild}`);
+  console.log(`run dotnet test --logger=trx -c Debug ${msbuild}`);
 
   try {
-    var dotnet = execSync(`dotnet test -c Debug ${msbuild}`);
+    var dotnet = execSync(`dotnet test --logger=trx -c Debug ${msbuild}`);
     console.log(`dotnet succeeded`);
     if (debug) {
       console.log('dotnet raw output :');
