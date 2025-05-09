@@ -176,6 +176,11 @@ try {
     console.log(file);
   });
 
+  console.log(`content of root ${currentDirectory}/tests`);
+  fs.readdirSync(currentDirectory+"/tests").forEach(file => {
+    console.log(file);
+  });
+
 
   if (!fs.existsSync(coverageFile)) {
     fs.readdirSync(resultDir).forEach(file => {
