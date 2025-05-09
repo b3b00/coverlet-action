@@ -171,6 +171,11 @@ try {
   const testPath = path.dirname(testProject);
   const coverageFile = path.join(currentDirectory,'TestResults', output);
 
+  console.log(`content of root ${currentDirectory}`);
+  fs.readdirSync(currentDirectory).forEach(file => {
+    console.log(file);
+  });
+
 
   if (!fs.existsSync(coverageFile)) {
     fs.readdirSync(resultDir).forEach(file => {
