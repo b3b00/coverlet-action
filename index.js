@@ -154,6 +154,19 @@ try {
       console.log(dotnet);
     }
     assertCoverageThreshold(dotnet, thresholdstring);
+
+    console.log(`files in ${currentDirectory}/TestResults are :`);
+    fs.readdirSync(`${currentDirectory}/TestResults`).forEach(file => {
+      console.log('  - '+file);
+    });
+
+    if (fs.existsSync('${currentDirectory}/TestResults/${output}')) {
+      console.log(`file ${currentDirectory}/TestResults/${output} exists`);
+    }
+    else {
+      console.log(`dotnet test failed : ${currentDirectory}/TestResults/${output} not found`);
+      
+    }
   } catch (error) {
     console.log(`dotnet failed`);    
     assertCoverageThreshold(error.stdout, thresholdstring);    
