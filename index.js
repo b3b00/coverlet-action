@@ -131,7 +131,7 @@ try {
   /****************************************/
 
 
-  let msbuild = `-p:coverletOutput=${currentDirectory}/TestResults/${output} -p:CollectCoverage=true  -p:MergeWith=${currentDirectory}/TestResults/coverlet.json -p:CoverletOutputFormat=\\"json%2c${outputFormat}\\"`;
+  let msbuild = `-p:coverletOutput=${currentDirectory}/TestResults/${output} -p:CollectCoverage=true -p:CoverletOutputFormat="${outputFormat}"`;
   if (excludestring !== null && excludestring !== undefined) {
     msbuild += ` -p:Exclude=\\"${excludestring}\\"`;
   }
