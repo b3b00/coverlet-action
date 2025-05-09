@@ -98,6 +98,9 @@ try {
   let debugstring = core.getInput("debug");
   console.log(`debug ${debugstring}`);
   let debug = debugstring == 'true';
+  const trxString = core.getInput("trx");
+  console.log(`trx ${trxString}`);
+  const trx = trxString == 'true';
 
 /* ***************************************/
   /* ***                                ****/
@@ -144,10 +147,11 @@ try {
   /* ***                                ****/
   /* ***************************************/
 
-  console.log(`run dotnet test --logger=trx -c Debug ${msbuild}`);
+  const useTrx = trx ? "--logger=trx" : "";
+  console.log(`run dotnet test ${useTrx} -c Debug ${msbuild}`);
 
   try {
-    var dotnet = execSync(`dotnet test --logger=trx -c Debug ${msbuild}`);
+    var dotnet = execSync(`dotnet test ${useTrx} -c Debug ${msbuild}`);
     console.log(`dotnet succeeded`);
     if (debug) {
       console.log('dotnet raw output :');
